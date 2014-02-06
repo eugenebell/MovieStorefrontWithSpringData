@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.cit.eugene</groupId>
+	<groupId>com.eugene</groupId>
 	<artifactId>MovieStoreFront</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 
 	<dependencies>
 		<!-- Jackson -->
@@ -16,7 +16,6 @@
 			<version>${jackson.version}</version>
 		</dependency>
 		<!-- Spring -->
-		 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
@@ -143,7 +142,7 @@
 		</repository>
 	</repositories>
 	<properties>
-		<spring.framework.version>3.2.5.RELEASE</spring.framework.version>
+		<spring.framework.version>4.0.0.RELEASE</spring.framework.version>
 		<spring.security.version>3.2.0.RC2</spring.security.version>
 		<hibernate.version>3.5.1-Final</hibernate.version>
 		<jackson.version>1.4.2</jackson.version>

@@ -24,6 +24,7 @@
 			</security:authorize>
 		</p>
 		<security:authorize ifAllGranted="ROLE_ADMIN">
+			<h1>Create Video Store Member</h1>
 			<div class="main_menu">
 				<ul>
 					<li><a onclick="showMemberListing()" href="#"
@@ -68,7 +69,7 @@
 			</div>
 		</security:authorize>
 		<security:authorize ifNotGranted="ROLE_ADMIN">
-			<h1>Create Video Store Member</h1>
+			
 			<div class="main_menu">
 				<ul id="filters">
 					<c:forEach items="${genres}" var="genre">
