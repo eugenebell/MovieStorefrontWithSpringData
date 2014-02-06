@@ -20,6 +20,6 @@ public interface GenreRepository extends CrudRepository<Genre, Long> {
 	 * @return List<Genre>
 	 */
 	@Secured("ROLE_USER")
-	List<Genre> findAll();//getAllGenres();
+	List<Genre> findAll();
 	
 }

@@ -52,13 +52,13 @@ public class MovieServiceImpl implements MovieService {
 	
 	@Transactional(readOnly=true)
 	public List<Movie> getMovieListingByGenreID(Long genreID) {
-		return movieRepository.findByGenreID(genreID);//getMovieListingByGenreID(genreID);
+		return movieRepository.findByGenreID(genreID);
 	}
 
 	@Transactional(readOnly=true)
 	public Movie getMovieByID(String username, Long movieID) {
 		VideoStoreMember vsm = videoStoreMemberRepository.getVideoStoreMemberByName(username);
-		Movie movie = movieRepository.findByMovieID(movieID);//getMovieByID(movieID);
+		Movie movie = movieRepository.findByMovieID(movieID);
 		List<MovieReservation> l = vsm.getMovieReservations();
 		for (MovieReservation movieReservation : l) {
 				if (movieReservation.getMovie().getMovieID().equals(movie.getMovieID())) {

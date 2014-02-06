@@ -27,9 +27,6 @@ public class VideoStoreMemberServiceImpl implements VideoStoreMemberService {
 
 	private static final Logger LOG = Logger.getLogger(VideoStoreMemberServiceImpl.class);
 
-	// @Autowired
-	// private SaltSource mySalt;
-
 	@Autowired
 	private MovieRepository movieRepository;
 	

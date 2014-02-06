@@ -22,7 +22,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 	 * @return List<Movie>
 	 */
 	@Secured({"ROLE_USER", "ROLE_ADMIN"}) 
-	List<Movie> findAll();//getAllMovies();
+	List<Movie> findAll();
 	
 	/**
 	 * Get all movie by genre ID.
@@ -32,7 +32,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 	 */
 	@Secured({"ROLE_USER", "ROLE_ADMIN"}) 
 	@Query("SELECT m FROM Movie m INNER JOIN m.genres g WHERE g.genreID IN (:genreID)")
-	List<Movie> findByGenreID(@Param("genreID") Long genreID); //getMovieListingByGenreID(Long genreID);
+	List<Movie> findByGenreID(@Param("genreID") Long genreID);
 	
 	/**
 	 * Get movie by id.

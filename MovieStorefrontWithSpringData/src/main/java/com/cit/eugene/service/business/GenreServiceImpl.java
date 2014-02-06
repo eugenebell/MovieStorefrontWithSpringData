@@ -37,7 +37,7 @@ public class GenreServiceImpl implements GenreService {
 
 	@Transactional(readOnly=true)
 	public List<Genre> getGenreListing() {
-		return genreRepository.findAll();//getAllGenres();
+		return genreRepository.findAll();
 	}
 	
 }

@@ -3,14 +3,9 @@ package com.cit.eugene.service.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import javax.persistence.NoResultException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.cit.eugene.model.Account;
 import com.cit.eugene.model.Authorities;
 import com.cit.eugene.model.User;
 import com.cit.eugene.model.VideoStoreMember;
@@ -63,7 +56,7 @@ public class JpaVideoStoreMemberDAOTest {
 		assertEquals("Cork", vsm.getLocation());
 		assertEquals("122345456", vsm.getMemebershipNumber());
 	}
-//
+
 //	@Test
 //	public void testStoreVideoStoreMember() {
 //		VideoStoreMember vsm = new VideoStoreMember();
