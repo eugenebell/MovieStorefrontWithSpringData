@@ -23,7 +23,9 @@ import com.cit.eugene.model.VideoStoreMember;
 public class JpaMovieReservationDAOTest {
 
 	@Autowired
-	private JpaMovieReservationDAO jpaMovieReservationDAO;
+	private MovieReservationRepository movieReservationDAO;
+	@Autowired
+	private VideoStoreMemberRepository videoStoreMemberDAO;
 
 	@Test
 	public void testStoreOrUpdateMovieReservation() {
@@ -35,8 +37,9 @@ public class JpaMovieReservationDAOTest {
 		movieReservation.setMovie(movie);
 		VideoStoreMember memberID = new VideoStoreMember();
 		memberID.setVideoStoreMemberID(1l);
-		movieReservation.setMemberID(memberID);
-		MovieReservation expected = jpaMovieReservationDAO.storeOrUpdateMovieReservation(movieReservation);
+		VideoStoreMember memberID2 =videoStoreMemberDAO.save(memberID);
+		movieReservation.setMemberID(memberID2);
+		MovieReservation expected = movieReservationDAO.save(movieReservation);
 		assertNotNull(expected);
 		assertEquals(expected.getMovie().getMovieID().longValue(), 1l);
 		assertEquals(expected.getMemberID().getVideoStoreMemberID().longValue(), 1l);
@@ -55,12 +58,12 @@ public class JpaMovieReservationDAOTest {
 		VideoStoreMember memberID = new VideoStoreMember();
 		memberID.setVideoStoreMemberID(1l);
 		movieReservation.setMemberID(memberID);
-		MovieReservation expected = jpaMovieReservationDAO.storeOrUpdateMovieReservation(movieReservation);
+		MovieReservation expected = movieReservationDAO.save(movieReservation);
 		assertNotNull(expected);
 		assertEquals(d, movieReservation.getReservationDate());
 		assertEquals(33l, movieReservation.getMovieReservationID().longValue());
 		try {
-			jpaMovieReservationDAO.deleteMovieReservation(expected);
+			movieReservationDAO.delete(expected);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

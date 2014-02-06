@@ -20,25 +20,25 @@ import com.cit.eugene.model.Movie;
 import com.cit.eugene.model.MovieReservation;
 import com.cit.eugene.model.User;
 import com.cit.eugene.model.VideoStoreMember;
-import com.cit.eugene.service.dao.MovieDAO;
-import com.cit.eugene.service.dao.MovieReservationDAO;
-import com.cit.eugene.service.dao.VideoStoreMemberDAO;
+import com.cit.eugene.service.dao.MovieRepository;
+import com.cit.eugene.service.dao.MovieReservationRepository;
+import com.cit.eugene.service.dao.VideoStoreMemberRepository;
 
-public class VideoStoreMemberManagerImplTest {
+public class VideoStoreMemberServiceImplTest {
 
-	private VideoStoreMemberDAO videoStoreMemberRepository = null;
-	private MovieDAO movieDAORepository = null;
-	private MovieReservationDAO movieReservationRepository = null;
-	private VideoStoreMemberManagerImpl movieManagerImpl = null;
+	private VideoStoreMemberRepository videoStoreMemberRepository = null;
+	private MovieRepository movieDAORepository = null;
+	private MovieReservationRepository movieReservationRepository = null;
+	private VideoStoreMemberServiceImpl movieManagerImpl = null;
 	private Movie m = new Movie();
 	private VideoStoreMember vsm = new VideoStoreMember();
 	
 	@Before
 	public void setUp() throws Exception {
-		videoStoreMemberRepository = createMock(VideoStoreMemberDAO.class);
-		movieDAORepository = createMock(MovieDAO.class);
-		movieReservationRepository = createMock(MovieReservationDAO.class);
-		movieManagerImpl = new VideoStoreMemberManagerImpl();
+		videoStoreMemberRepository = createMock(VideoStoreMemberRepository.class);
+		movieDAORepository = createMock(MovieRepository.class);
+		movieReservationRepository = createMock(MovieReservationRepository.class);
+		movieManagerImpl = new VideoStoreMemberServiceImpl();
 		movieManagerImpl.init();
 		movieManagerImpl.setMovieRepository(movieDAORepository);	
 		movieManagerImpl.setVideoStoreMemberRepository(videoStoreMemberRepository);
@@ -95,7 +95,7 @@ public class VideoStoreMemberManagerImplTest {
 		u.setPassword("password");
 		u.setUsername("username");
 		vsmNew.setUser(u);
-		expect(videoStoreMemberRepository.storeVideoStoreMember(vsmNew)).andReturn(vsmNew);
+		expect(videoStoreMemberRepository.save(vsmNew)).andReturn(vsmNew);
 		replay(videoStoreMemberRepository);
 		VideoStoreMember expected = movieManagerImpl.storeVideoStoreMember(vsmNew);
 		assertEquals(expected, vsmNew);
@@ -126,7 +126,7 @@ public class VideoStoreMemberManagerImplTest {
 
 	@Test
 	public void testCancelReservedMovie() {
-		expect(videoStoreMemberRepository.storeVideoStoreMember(vsm)).andReturn(vsm);
+		expect(videoStoreMemberRepository.save(vsm)).andReturn(vsm);
 		expect(videoStoreMemberRepository.getVideoStoreMemberByName("bob")).andReturn(vsm);
 		replay(videoStoreMemberRepository);
 		boolean expected = movieManagerImpl.cancelReservedMovie("bob", 1l);
@@ -145,7 +145,7 @@ public class VideoStoreMemberManagerImplTest {
 
 	@Test
 	public void testRentedMovie() {
-		expect(videoStoreMemberRepository.storeVideoStoreMember(vsm)).andReturn(vsm);
+		expect(videoStoreMemberRepository.save(vsm)).andReturn(vsm);
 		replay(videoStoreMemberRepository);
 		boolean expected = movieManagerImpl.rentedMovie(vsm, 1l);
 		assertEquals(expected, true);
@@ -155,16 +155,16 @@ public class VideoStoreMemberManagerImplTest {
 	@Test
 	public void testGetAllVideoStoreMember() {
 		List<VideoStoreMember> l = new ArrayList<VideoStoreMember>();
-		expect(videoStoreMemberRepository.getAllVideoStoreMembers()).andReturn(l);
+		expect(videoStoreMemberRepository.findAll()).andReturn(l);
 		replay(videoStoreMemberRepository);
-		List<VideoStoreMember> expected = movieManagerImpl.getAllVideoStoreMember();
+		Iterable<VideoStoreMember> expected = movieManagerImpl.getAllVideoStoreMember();
 		assertEquals(expected, l);
 		verify(videoStoreMemberRepository);
 	}
 
 	@Test
 	public void testGetVideoStoreMembersReservations() {
-		expect(videoStoreMemberRepository.getVideoStoreMemberByID(2l)).andReturn(vsm);
+		expect(videoStoreMemberRepository.findOne(2l)).andReturn(vsm);
 		replay(videoStoreMemberRepository);
 		List<MovieReservation> expected = movieManagerImpl.getVideoStoreMembersReservations(2l);
 		assertNotNull(expected);
@@ -173,7 +173,7 @@ public class VideoStoreMemberManagerImplTest {
 
 	@Test
 	public void testGetVideoStoreMemberByID() {
-		expect(videoStoreMemberRepository.getVideoStoreMemberByID(2l)).andReturn(vsm);
+		expect(videoStoreMemberRepository.findOne(2l)).andReturn(vsm);
 		replay(videoStoreMemberRepository);
 		VideoStoreMember expected = movieManagerImpl.getVideoStoreMemberByID(2l);
 		assertNotNull(expected);

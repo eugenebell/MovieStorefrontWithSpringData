@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.cit.eugene.model.MovieReservation;
 import com.cit.eugene.model.VideoStoreMember;
-import com.cit.eugene.service.business.VideoStoreMemberManager;
+import com.cit.eugene.service.business.VideoStoreMemberService;
 
 @Controller
 public class VideoStoreMemberController {
 
-	private VideoStoreMemberManager videoStoreMemberManager;
+	private VideoStoreMemberService videoStoreMemberManager;
 
 	// constructor injection
 	@Autowired
-	public VideoStoreMemberController(VideoStoreMemberManager videoStoreMemberManager) {
+	public VideoStoreMemberController(VideoStoreMemberService videoStoreMemberManager) {
 		this.videoStoreMemberManager = videoStoreMemberManager;
 	}
 
@@ -37,7 +37,7 @@ public class VideoStoreMemberController {
 
 	@RequestMapping(value = "/movieListing/listAllVideoStoreMember", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<VideoStoreMember> getAllVideoStoreMember() {
+	public @ResponseBody Iterable<VideoStoreMember> getAllVideoStoreMember() {
 		return videoStoreMemberManager.getAllVideoStoreMember();
 	}
 

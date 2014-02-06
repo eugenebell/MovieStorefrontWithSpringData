@@ -7,9 +7,9 @@ import com.cit.eugene.model.Movie;
 /**
  * Class is for the Management of Movies.
  * 
- * @author Eugene
+ * @author Eugene Bell
  */
-public interface MovieManager {
+public interface MovieService {
 
 	/**
 	 * Returns the list of Movies.

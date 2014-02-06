@@ -7,9 +7,9 @@ import com.cit.eugene.model.Genre;
 /**
  * Class is for the Management of Genres.
  * 
- * @author Eugene
+ * @author Eugene Bell
  */
-public interface GenreManager {
+public interface GenreService {
 
 	/**
 	 * Returns the list of genres.

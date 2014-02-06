@@ -8,16 +8,16 @@ import com.cit.eugene.model.VideoStoreMember;
 /**
  * Class is for the Management of VidepStoreMember.
  * 
- * @author Eugene
+ * @author Eugene Bell
  */
-public interface VideoStoreMemberManager {
+public interface VideoStoreMemberService {
 
 	/**
 	 * Returns all the VideoStoreMembers.
 	 * 
 	 * @return List<VideoStoreMember>
 	 */
-	public List<VideoStoreMember> getAllVideoStoreMember();
+	public Iterable<VideoStoreMember> getAllVideoStoreMember();
 	
 	/**
 	 * Returns VideoStoreMember based on name.

@@ -13,20 +13,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cit.eugene.model.Movie;
-import com.cit.eugene.service.business.GenreManager;
-import com.cit.eugene.service.business.MovieManager;
+import com.cit.eugene.service.business.GenreService;
+import com.cit.eugene.service.business.MovieService;
 
 public class MovieControllerTest {
 
-	private GenreManager genreManager = null;
-	private MovieManager movieManager = null;
+	private GenreService genreManager = null;
+	private MovieService movieManager = null;
 	private MovieController movieController = null;
 	private Movie m = new Movie();
 	
 	@Before
 	public void setUp() throws Exception {
-		genreManager = createMock(GenreManager.class);
-		movieManager = createMock(MovieManager.class);
+		genreManager = createMock(GenreService.class);
+		movieManager = createMock(MovieService.class);
 		movieController = new MovieController(movieManager, genreManager);
 		m.setMovieID(1l);
 		m.setActorsDisplay("actorsDisplay");

@@ -18,26 +18,26 @@ import com.cit.eugene.model.Account;
 import com.cit.eugene.model.Authorities;
 import com.cit.eugene.model.MovieReservation;
 import com.cit.eugene.model.VideoStoreMember;
-import com.cit.eugene.service.dao.MovieDAO;
-import com.cit.eugene.service.dao.MovieReservationDAO;
-import com.cit.eugene.service.dao.VideoStoreMemberDAO;
+import com.cit.eugene.service.dao.MovieRepository;
+import com.cit.eugene.service.dao.MovieReservationRepository;
+import com.cit.eugene.service.dao.VideoStoreMemberRepository;
 
 @Service
-public class VideoStoreMemberManagerImpl implements VideoStoreMemberManager {
+public class VideoStoreMemberServiceImpl implements VideoStoreMemberService {
 
-	private static final Logger LOG = Logger.getLogger(VideoStoreMemberManagerImpl.class);
+	private static final Logger LOG = Logger.getLogger(VideoStoreMemberServiceImpl.class);
 
 	// @Autowired
 	// private SaltSource mySalt;
 
 	@Autowired
-	private MovieDAO movieRepository;
+	private MovieRepository movieRepository;
 	
 	@Autowired
-	private MovieReservationDAO movieReservationRepository;
+	private MovieReservationRepository movieReservationRepository;
 
 	@Autowired
-	private VideoStoreMemberDAO videoStoreMemberRepository;
+	private VideoStoreMemberRepository videoStoreMemberRepository;
 
 	@PostConstruct
 	void init() {
@@ -49,15 +49,15 @@ public class VideoStoreMemberManagerImpl implements VideoStoreMemberManager {
 		LOG.info("VideoStoreMemberManagerImpl Has been Destroyed");
 	}
 
-	public void setVideoStoreMemberRepository(VideoStoreMemberDAO videoStoreMemberRepository) {
+	public void setVideoStoreMemberRepository(VideoStoreMemberRepository videoStoreMemberRepository) {
 		this.videoStoreMemberRepository = videoStoreMemberRepository;
 	}	
 
-	public void setMovieReservationRepository(MovieReservationDAO movieReservationRepository) {
+	public void setMovieReservationRepository(MovieReservationRepository movieReservationRepository) {
 		this.movieReservationRepository = movieReservationRepository;
 	}
 
-	public void setMovieRepository(MovieDAO movieRepository) {
+	public void setMovieRepository(MovieRepository movieRepository) {
 		this.movieRepository = movieRepository;
 	}
 
@@ -76,7 +76,7 @@ public class VideoStoreMemberManagerImpl implements VideoStoreMemberManager {
 		videoStoreMember.setAccount(account);
 		videoStoreMember.getUser().setAuthoritieses(s);
 		videoStoreMember.getUser().setEnabled(true);
-		return videoStoreMemberRepository.storeVideoStoreMember(videoStoreMember);
+		return videoStoreMemberRepository.save(videoStoreMember);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -85,9 +85,9 @@ public class VideoStoreMemberManagerImpl implements VideoStoreMemberManager {
 		MovieReservation mr = new MovieReservation();
 		mr.setMemberID(vsm);
 		mr.setRented(rented);
-		mr.setMovie(movieRepository.getMovieByID(movieID));
+		mr.setMovie(movieRepository.findByMovieID(movieID));//getMovieByID(movieID));
 		mr.setReservationDate(Calendar.getInstance().getTime());
-		movieReservationRepository.storeOrUpdateMovieReservation(mr);
+		movieReservationRepository.save(mr);//storeOrUpdateMovieReservation(mr);
 		return true;
 	}
 
@@ -107,7 +107,7 @@ public class VideoStoreMemberManagerImpl implements VideoStoreMemberManager {
 		if (toBeRemoved != null) {
 			vsm.getMovieReservations().remove(toBeRemoved);
 		}
-		videoStoreMemberRepository.storeVideoStoreMember(vsm);
+		videoStoreMemberRepository.save(vsm);
 		return true;
 	}
 
@@ -129,27 +129,27 @@ public class VideoStoreMemberManagerImpl implements VideoStoreMemberManager {
 				mr.setRented(true);
 			}
 		}
-		videoStoreMemberRepository.storeVideoStoreMember(vsm);
+		videoStoreMemberRepository.save(vsm);
 		return true;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public List<VideoStoreMember> getAllVideoStoreMember() {
-		return videoStoreMemberRepository.getAllVideoStoreMembers();
+	public Iterable<VideoStoreMember> getAllVideoStoreMember() {
+		return videoStoreMemberRepository.findAll();
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public List<MovieReservation> getVideoStoreMembersReservations(Long videoStoreMemberID) {
-		return videoStoreMemberRepository.getVideoStoreMemberByID(videoStoreMemberID).getMovieReservations();
+		return videoStoreMemberRepository.findOne(videoStoreMemberID).getMovieReservations();//getVideoStoreMemberByID(videoStoreMemberID).getMovieReservations();
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void deleteVideoStoreMember(Long videoStoreMemberID) {
-		videoStoreMemberRepository.deleteVideoStoreMember(videoStoreMemberID);
+		videoStoreMemberRepository.delete(videoStoreMemberID);//deleteVideoStoreMember(videoStoreMemberID);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public VideoStoreMember getVideoStoreMemberByID(Long videoStoreMemberID) {
-		return videoStoreMemberRepository.getVideoStoreMemberByID(videoStoreMemberID);
+		return videoStoreMemberRepository.findOne(videoStoreMemberID);//getVideoStoreMemberByID(videoStoreMemberID);
 	}
 }

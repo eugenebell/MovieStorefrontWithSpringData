@@ -18,22 +18,22 @@ import org.junit.Test;
 import com.cit.eugene.model.Movie;
 import com.cit.eugene.model.MovieReservation;
 import com.cit.eugene.model.VideoStoreMember;
-import com.cit.eugene.service.dao.MovieDAO;
-import com.cit.eugene.service.dao.VideoStoreMemberDAO;
+import com.cit.eugene.service.dao.MovieRepository;
+import com.cit.eugene.service.dao.VideoStoreMemberRepository;
 
-public class MovieManagerImplTest {
+public class MovieServiceImplTest {
 
-	private MovieDAO movieDAORepository = null;
-	private MovieManagerImpl movieManagerImpl = null;
-	private VideoStoreMemberDAO videoStoreMemberRepository = null;
+	private MovieRepository movieDAORepository = null;
+	private MovieServiceImpl movieManagerImpl = null;
+	private VideoStoreMemberRepository videoStoreMemberRepository = null;
 	private Movie m = new Movie();
 	private VideoStoreMember vsm = new VideoStoreMember();
 	
 	@Before
 	public void setUp() throws Exception {
-		movieDAORepository = createMock(MovieDAO.class);
-		movieManagerImpl = new MovieManagerImpl();
-		videoStoreMemberRepository = createMock(VideoStoreMemberDAO.class);
+		movieDAORepository = createMock(MovieRepository.class);
+		movieManagerImpl = new MovieServiceImpl();
+		videoStoreMemberRepository = createMock(VideoStoreMemberRepository.class);
 		movieManagerImpl.init();
 		movieManagerImpl.setMovieRepository(movieDAORepository);	
 		movieManagerImpl.setVideoStoreMemberDAO(videoStoreMemberRepository);
@@ -75,7 +75,7 @@ public class MovieManagerImplTest {
 
 	@Test
 	public void testGetMovieListing() {
-		expect(movieDAORepository.getAllMovies()).andReturn(new ArrayList<Movie>());
+		expect(movieDAORepository.findAll()).andReturn(new ArrayList<Movie>());
 		replay(movieDAORepository);
 		List<Movie> l2 = movieManagerImpl.getMovieListing();
 		assertNotNull(l2);
@@ -86,7 +86,7 @@ public class MovieManagerImplTest {
 	public void testGetMovieListingByGenreID() {
 		List<Movie> l = new ArrayList<Movie>();
 		l.add(m);
-		expect(movieDAORepository.getMovieListingByGenreID(1l)).andReturn(l);
+		expect(movieDAORepository.findByGenreID(1l)).andReturn(l);
 		replay(movieDAORepository);
 		List<Movie> l2 = movieManagerImpl.getMovieListingByGenreID(1l);
 		assertNotNull(l2);
@@ -96,7 +96,7 @@ public class MovieManagerImplTest {
 	@Test
 	public void testGetMovieByID() {
 		expect(videoStoreMemberRepository.getVideoStoreMemberByName("bob")).andReturn(vsm);
-		expect(movieDAORepository.getMovieByID(1l)).andReturn(m);
+		expect(movieDAORepository.findByMovieID(1l)).andReturn(m);
 		replay(videoStoreMemberRepository);
 		replay(movieDAORepository);
 		assertEquals(m, movieManagerImpl.getMovieByID("bob", 1l));

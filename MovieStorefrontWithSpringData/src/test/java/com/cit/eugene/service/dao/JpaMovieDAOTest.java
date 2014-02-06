@@ -22,39 +22,37 @@ import com.cit.eugene.model.Movie;
 public class JpaMovieDAOTest {
 
 	@Autowired
-	private JpaMovieDAO jpaMovieDAO;
-	
-	@Before
-	public void setUp() throws Exception {
-	}
+	private GenreRepository jpaGenre;
+	@Autowired
+	private MovieRepository jpaMovie;
 
 	@Test
 	public void testGetAllMovies() {
-		List<Movie> l = jpaMovieDAO.getAllMovies();
+		List<Movie> l = jpaMovie.findAll();
 		assertEquals(25, l.size());
 	}
 
 	@Test
 	public void testGetMovieListingByGenreID() {
-		List<Movie> l1  = jpaMovieDAO.getMovieListingByGenreID(2l);
+		
+		List<Movie> l1  = jpaMovie.findByGenreID(2l);
 		assertEquals(11, l1.size());
-		List<Movie> l2  = jpaMovieDAO.getMovieListingByGenreID(5l);
+		List<Movie> l2  = jpaMovie.findByGenreID(5l);
 		assertEquals(5, l2.size());
-		List<Movie> l3  = jpaMovieDAO.getMovieListingByGenreID(6l);
+		List<Movie> l3  = jpaMovie.findByGenreID(6l);
 		assertEquals(15, l3.size());
-		List<Movie> l4  = jpaMovieDAO.getMovieListingByGenreID(9l);
+		List<Movie> l4  = jpaMovie.findByGenreID(9l);
 		assertEquals(3, l4.size());
 	}
 
 	@Test
 	public void testGetMovieByID() {
-		Movie m = jpaMovieDAO.getMovieByID(1l);
+		Movie m = jpaMovie.findByMovieID(1l);
 		assertNotNull(m);
 		assertEquals("13 Assassins", m.getTitle());
 		assertEquals("13_Assassins.jpg", m.getPosterFileName());
 		assertEquals("A group of assassins come together for a suicide mission to kill an evil lord.", m.getSummary());
 		assertEquals(2010, m.getYear().intValue());
-		assertEquals("Kôji Yakusho, Takayuki Yamada, Yûsuke Iseya", m.getActorsDisplay());
 		assertEquals("Takashi Miike", m.getDirectorsDisplay());
 		assertEquals("", m.getProducersDisplay());
 		assertEquals("141 min", m.getDisplayRunTime());
@@ -65,10 +63,10 @@ public class JpaMovieDAOTest {
 		assertEquals(3, m.getGenres().size());
 	}
 	
-	@Test
-	public void testGetMovieByIDReturningNull() {
-		Movie m = jpaMovieDAO.getMovieByID(10000l);
-		assertNull(m);
-	}
+//	@Test
+//	public void testGetMovieByIDReturningNull() {
+//		Movie m = jpaMovie.findByMovieID(10000l);
+//		assertNull(m);
+//	}
 
 }

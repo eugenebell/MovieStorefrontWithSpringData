@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cit.eugene.model.Movie;
-import com.cit.eugene.service.business.GenreManager;
-import com.cit.eugene.service.business.MovieManager;
+import com.cit.eugene.service.business.GenreService;
+import com.cit.eugene.service.business.MovieService;
 
 @Controller
 public class MovieController {
 
-	private MovieManager movieManager;
-	private GenreManager genreManager;
+	private MovieService movieManager;
+	private GenreService genreManager;
 
 	// constructor injection
 	@Autowired
-	public MovieController(MovieManager movieManager, GenreManager genreManager) {
+	public MovieController(MovieService movieManager, GenreService genreManager) {
 		this.movieManager = movieManager;
 		this.genreManager = genreManager;
 	}

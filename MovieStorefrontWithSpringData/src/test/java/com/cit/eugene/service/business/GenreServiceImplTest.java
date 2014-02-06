@@ -13,17 +13,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cit.eugene.model.Genre;
-import com.cit.eugene.service.dao.GenreDAO;
+import com.cit.eugene.service.dao.GenreRepository;
 
-public class GenreManagerImplTest {
+public class GenreServiceImplTest {
 
-	private GenreDAO genreRepository = null;
-	private GenreManagerImpl genreManagerImpl = null;
+	private GenreRepository genreRepository = null;
+	private GenreServiceImpl genreManagerImpl = null;
 	
 	@Before
 	public void setUp() throws Exception {
-		genreRepository = createMock(GenreDAO.class);
-		genreManagerImpl = new GenreManagerImpl();
+		genreRepository = createMock(GenreRepository.class);
+		genreManagerImpl = new GenreServiceImpl();
 		genreManagerImpl.init();
 		genreManagerImpl.setGenreRepository(genreRepository);
 	}
@@ -41,7 +41,7 @@ public class GenreManagerImplTest {
 
 	@Test
 	public void testGetGenreListing() {
-		expect(genreRepository.getAllGenres()).andReturn(new ArrayList<Genre>());
+		expect(genreRepository.findAll()).andReturn(new ArrayList<Genre>());
 		replay(genreRepository);
 		assertNotNull(genreManagerImpl.getGenreListing());
 		verify(genreRepository);

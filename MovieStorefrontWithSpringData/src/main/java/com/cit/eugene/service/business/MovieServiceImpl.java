@@ -13,19 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cit.eugene.model.Movie;
 import com.cit.eugene.model.MovieReservation;
 import com.cit.eugene.model.VideoStoreMember;
-import com.cit.eugene.service.dao.MovieDAO;
-import com.cit.eugene.service.dao.VideoStoreMemberDAO;
+import com.cit.eugene.service.dao.MovieRepository;
+import com.cit.eugene.service.dao.VideoStoreMemberRepository;
 
 @Service
-public class MovieManagerImpl implements MovieManager {
+public class MovieServiceImpl implements MovieService {
 
-	private static final Logger LOG = Logger.getLogger(MovieManagerImpl.class);
+	private static final Logger LOG = Logger.getLogger(MovieServiceImpl.class);
 	
 	@Autowired
-	private MovieDAO movieRepository;
+	private MovieRepository movieRepository;
 	
 	@Autowired
-	private VideoStoreMemberDAO videoStoreMemberRepository;
+	private VideoStoreMemberRepository videoStoreMemberRepository;
 	
 	@PostConstruct
 	void init() {
@@ -37,28 +37,28 @@ public class MovieManagerImpl implements MovieManager {
 		LOG.info("MovieManagerImpl Has been Destroyed");
 	}
 	
-	public void setMovieRepository(MovieDAO movieRepository) {
+	public void setMovieRepository(MovieRepository movieRepository) {
 		this.movieRepository = movieRepository;
 	}
 	
-	public void setVideoStoreMemberDAO(VideoStoreMemberDAO videoStoreMemberRepository) {
+	public void setVideoStoreMemberDAO(VideoStoreMemberRepository videoStoreMemberRepository) {
 		this.videoStoreMemberRepository = videoStoreMemberRepository;
 	}
 
 	@Transactional(readOnly=true)
 	public List<Movie> getMovieListing() {
-		return movieRepository.getAllMovies();
+		return movieRepository.findAll();//getAllMovies();
 	}
 	
 	@Transactional(readOnly=true)
 	public List<Movie> getMovieListingByGenreID(Long genreID) {
-		return movieRepository.getMovieListingByGenreID(genreID);
+		return movieRepository.findByGenreID(genreID);//getMovieListingByGenreID(genreID);
 	}
 
 	@Transactional(readOnly=true)
 	public Movie getMovieByID(String username, Long movieID) {
 		VideoStoreMember vsm = videoStoreMemberRepository.getVideoStoreMemberByName(username);
-		Movie movie = movieRepository.getMovieByID(movieID);
+		Movie movie = movieRepository.findByMovieID(movieID);//getMovieByID(movieID);
 		List<MovieReservation> l = vsm.getMovieReservations();
 		for (MovieReservation movieReservation : l) {
 				if (movieReservation.getMovie().getMovieID().equals(movie.getMovieID())) {

@@ -18,17 +18,17 @@ import com.cit.eugene.model.Authorities;
 import com.cit.eugene.model.MovieReservation;
 import com.cit.eugene.model.User;
 import com.cit.eugene.model.VideoStoreMember;
-import com.cit.eugene.service.business.VideoStoreMemberManager;
+import com.cit.eugene.service.business.VideoStoreMemberService;
 
 public class VideoStoreMemberControllerTest {
 
-	private VideoStoreMemberManager videoStoreMemberManager = null;
+	private VideoStoreMemberService videoStoreMemberManager = null;
 	private VideoStoreMemberController videoStoreMemberController = null;
 	private User u = null;
 
 	@Before
 	public void setUp() throws Exception {
-		videoStoreMemberManager = createMock(VideoStoreMemberManager.class);
+		videoStoreMemberManager = createMock(VideoStoreMemberService.class);
 		videoStoreMemberController = new VideoStoreMemberController(videoStoreMemberManager);
 		u = new User();
 		u.setEnabled(true);
@@ -46,7 +46,7 @@ public class VideoStoreMemberControllerTest {
 	public void testGetAllVideoStoreMember() {
 		expect(videoStoreMemberManager.getAllVideoStoreMember()).andReturn(new ArrayList<VideoStoreMember>());
 		replay(videoStoreMemberManager);
-		List<VideoStoreMember> v = videoStoreMemberController.getAllVideoStoreMember();
+		Iterable<VideoStoreMember> v = videoStoreMemberController.getAllVideoStoreMember();
 		assertNotNull(v);
 		verify(videoStoreMemberManager);
 	}

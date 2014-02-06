@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cit.eugene.model.Genre;
-import com.cit.eugene.service.dao.GenreDAO;
+import com.cit.eugene.service.dao.GenreRepository;
 
 @Service
-public class GenreManagerImpl implements GenreManager {
+public class GenreServiceImpl implements GenreService {
 
-	private static final Logger LOG = Logger.getLogger(GenreManagerImpl.class);
+	private static final Logger LOG = Logger.getLogger(GenreServiceImpl.class);
 	
 	@Autowired
-	private GenreDAO genreRepository;
+	private GenreRepository genreRepository;
 	
 	@PostConstruct
 	void init() {
@@ -31,13 +31,13 @@ public class GenreManagerImpl implements GenreManager {
 		LOG.info("GenreManagerImpl Has been Destroyed");
 	}
 
-	public void setGenreRepository(GenreDAO genreRepository) {
+	public void setGenreRepository(GenreRepository genreRepository) {
 		this.genreRepository = genreRepository;
 	}
 
 	@Transactional(readOnly=true)
 	public List<Genre> getGenreListing() {
-		return genreRepository.getAllGenres();
+		return genreRepository.findAll();//getAllGenres();
 	}
 	
 }

@@ -19,12 +19,12 @@ import com.cit.eugene.model.Genre;
 public class JpaGenreDAOTest {
 	
 	@Autowired
-	private JpaGenreDAO jpaGenre;
+	private GenreRepository jpaGenre;
 
 	@Test
 	@Transactional
 	public void testGetAllGenres() {
-		List<Genre> l = jpaGenre.getAllGenres();
+		List<Genre> l = jpaGenre.findAll();
 		assertEquals(11, l.size());
 		Genre g = l.get(1);
 		assertEquals(2, g.getGenreID().longValue());
